@@ -7,7 +7,7 @@ export async function getGames(req, res) {
         res.send(result.rows);
     } catch (e) {
         console.log(e);
-        res.status(500).send("Ocorreu um erro ao obter as receitas!");
+        res.status(500).send("Ocorreu um erro ao buscar os jogos!");
     }
 }
 
@@ -42,6 +42,6 @@ export async function postGames(req, res) {
         res.sendStatus(201);
     } catch (e) {
         console.log(e);
-        res.status(500).send("Ocorreu um erro ao tentar inserir uma nova categoria!");
+        res.status(500).send("Ocorreu um erro ao tentar inserir um novo jogo!");
     }
 }
