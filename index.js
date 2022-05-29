@@ -4,8 +4,11 @@ import chalk from 'chalk';
 import cors from "cors";
 
 //Routers
-//import pollRouter from "./routers/"
-//import choiceRouter from "./routers/"
+import categoriesRouters from "./routers/categoriesRouters.js"
+import customersRouters from "./routers/customersRouters.js"
+import gamesRouters from "./routers/gamesRouters.js"
+import rentalsRouters from "./routers/rentalsRouters.js"
+
 
 //Configurações padrões
 const app = express();
@@ -14,8 +17,11 @@ app.use(cors());
 dotenv.config();
 //
 //Routers
-//app.use(pollRouter);
-//app.use(choiceRouter);
+app.use(categoriesRouters);
+app.use(customersRouters);
+app.use(gamesRouters);
+app.use(rentalsRouters);
+
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
