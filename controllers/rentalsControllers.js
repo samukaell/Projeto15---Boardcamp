@@ -109,11 +109,11 @@ export async function postRentalsFinal(req, res) {
         //Buscar se existe o rental
         const rental = await db.query(`SELECT * FROM rentals WHERE id = $1`, [id]);
         if(rental.rows.length===0){
-            return res.sendStatus(401);  
+            return res.sendStatus(404);  
         } 
         //verificar se ja não esta finalizado
         if(rental.rows[0].returndate !== null) {
-            return res.sendStatus(401);//Ja esta finalizado
+            return res.sendStatus(400);//Ja esta finalizado
         }
 
         //Verificar atraso
@@ -135,6 +135,31 @@ export async function postRentalsFinal(req, res) {
                 returnDate = $1,
                 delayFee = $2
             WHERE id = $3`, [hoje,delayFee,id]);
+
+        res.sendStatus(200);
+
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("Ocorreu um erro ao tentar inserir um rentals!");
+    }
+}
+
+export async function deleteRentals(req, res) {
+    const {id} = req.params;
+    try {
+        //Buscar se existe o rental
+        const rental = await db.query(`SELECT * FROM rentals WHERE id = $1`, [id]);
+        if(rental.rows.length===0){
+            return res.sendStatus(404); //Não existe este rentals
+        } 
+        //verificar se ja não esta finalizado
+        if(rental.rows[0].returndate !== null) {
+            return res.sendStatus(400);//Ja esta finalizado
+        }
+        
+        const result = await db.query(`
+        DELETE FROM rentals WHERE id = $1
+        `, [id]);
 
         res.sendStatus(200);
 
